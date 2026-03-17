@@ -1,7 +1,11 @@
 const fetch = require("node-fetch");
 const Parser = require("rss-parser");
-const parser = new Parser();
 
+const parser = new Parser({
+  headers: {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+  }
+});
 const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1483504377032605840/MxqWdANdqxuzOAcL8WrvB9qSySW3p_dJRLGfx-lW1MrWfu9n44me7-33jf142D-ZPaGO";
 
 const KEYWORD = "#IRIAM で配信中！"; // 
