@@ -33,3 +33,14 @@ async function checkTweets() {
 
 setInterval(checkTweets, 300000);
 console.log("BOT起動中...");
+
+const http = require("http");
+
+const PORT = process.env.PORT || 3000;
+
+http.createServer((req, res) => {
+  res.write("BOT is running");
+  res.end();
+}).listen(PORT, () => {
+  console.log("Server running on port " + PORT);
+});
