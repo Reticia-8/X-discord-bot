@@ -2,21 +2,27 @@ const fetch = require("node-fetch");
 const Parser = require("rss-parser");
 const parser = new Parser();
 
-const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1483495154978521149/OMi2nM1W4f59DyLR9J3lEPTeKvB22nl0EcZLkCbfYWaeighd7CvKN5NcM_cqAA1hq0Mv";
+const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1483504377032605840/MxqWdANdqxuzOAcL8WrvB9qSySW3p_dJRLGfx-lW1MrWfu9n44me7-33jf142D-ZPaGO";
 
-const KEYWORD = "業務開始"; // 
+const KEYWORD = "#IRIAM で配信中！"; // 
 let sentIds = new Set();
 
 async function checkTweets() {
   try {
     const feed = await parser.parseURL("https://rsshub.app/x/user/Retia_R");
 
-    for (const item of feed.items) {
-      if (sentIds.has(item.id)) continue;
-      if (!item.title.includes(KEYWORD)) continue;
-      if (item.title.startsWith("RT")) continue;
+     for (const item of feed.items) {
+  if (sentIds.has(item.id)) continue;
 
-      await fetch(WEBHOOK_URL, {
+  const text = item.title;
+
+  if (text.startsWith("RT @")) continue;
+  if (text.startsWith("@")) continue;
+
+  if (!text.includes(KEYWORD)) continue;
+
+  await fetch(WEBHOOK_URL, {
+
         method: "POST",
         headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
