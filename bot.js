@@ -4,12 +4,12 @@ const parser = new Parser();
 
 const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1483495154978521149/OMi2nM1W4f59DyLR9J3lEPTeKvB22nl0EcZLkCbfYWaeighd7CvKN5NcM_cqAA1hq0Mv";
 
-const KEYWORD = "メンテナンス中はIRIAMをご利用いただけません"; // 
+const KEYWORD = "業務開始"; // 
 let sentIds = new Set();
 
 async function checkTweets() {
   try {
-    const feed = await parser.parseURL("https://rsshub.app/twitter/user/iriam_official");
+    const feed = await parser.parseURL("https://rsshub.app/x/user/Retia_R");
 
     for (const item of feed.items) {
       if (sentIds.has(item.id)) continue;
@@ -19,8 +19,11 @@ async function checkTweets() {
       await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: "@everyone\n" + item.title + "\n" + item.link
+      body: JSON.stringify({
+  content: "@everyone\n" + item.title + "\n" + item.link,
+  embeds: [{
+    timestamp: new Date(item.pubDate)
+  }]
         })
       });
 
